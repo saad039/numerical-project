@@ -27,6 +27,6 @@
             "projectname": "xtl"
         }
     },
-    "toolset": "gcc",
+    "toolset": "clang",
     "workspace": "numerical-project"
 }
