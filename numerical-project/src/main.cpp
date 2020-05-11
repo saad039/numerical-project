@@ -1,11 +1,9 @@
 #include<iostream>
 #include<cmath>
 #include<fstream>
-#include"xtensor/xarray.hpp"
+#include<vector>
 #include"util.h"
-#include<iomanip>
-
-namespace np = xt;
+#include<cassert>
 
 using std::cout;
 using std::endl;
@@ -14,8 +12,7 @@ using std::cin;
 
 using size_t = uint64_t;
 using precision_type = double;
-using static_container = np::xarray<precision_type>;
-using dynamic_container = np::svector<precision_type>;
+using dynamic_container = std::vector<precision_type>;
 using std::begin;
 using std::end;
 
@@ -49,31 +46,31 @@ int main(int argc, char const *argv[]){
     };
 
     auto get_val = std::bind(generator,std::placeholders::_1,N);
-
     dynamic_container vals;
     for(size_t i = 0 ; i <= N; ++i)
         vals.push_back(get_val(i));
-        
-    cout<<"Arc length from 0 to t* = "<<t_star<<" = "<<arc_length_a_b_n_2(static_cast<precision_type>(0.0),t_star)<<endl;
-    
 
+    const auto total_path_len = arc_length_a_b_n_2(static_cast<precision_type>(0.0),t_star);
+    cout<<"Arc length from 0 to t* = "<<t_star<<" = "<<total_path_len<<endl;
     std::ofstream out("points.txt");
     if(out.is_open()){
         std::for_each(begin(vals),end(vals),[&](auto s){
             auto ts = bisection_method(expr,s,dp);
-            out<<x_t(ts)<<endl;
-            out<<y_t(ts)<<endl;
+            out<<(ts)<<endl;
+            out<<(ts)<<endl;
         });
         out.close();
     }
-
     auto len = static_cast<precision_type>(0.0);
     for(size_t i = 0 ; i < N ; ++i){
         const auto t = arc_length_a_b_n_2(vals[i],vals[i+1]);
         len+=t;
         cout<<"Interval ("<<vals[i]<<','<<vals[i+1]<<") len = "<<t<<endl;
     }
-    
+
     cout<<"Arc length by partitioning s into "<<N<<" intervals= "<<len<<endl;
+    cout<<"Denomination: "<<denominator<<endl;
     return 0;
 }
+
+

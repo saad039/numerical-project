@@ -7,26 +7,10 @@
             "cppdialect": "C++17",
             "kind": "consoleapp",
             "links": [
-                "xtensor",
-                "xtl"
             ],
             "projectname": "numerical-project"
-        },
-        "xtensor": {
-            "cppdialect": "C++17",
-            "kind": "static",
-            "links": [
-                "xtl"
-            ],
-            "projectname": "xtensor"
-        },
-        "xtl": {
-            "cppdialect": "C++17",
-            "kind": "static",
-            "links": [],
-            "projectname": "xtl"
         }
     },
-    "toolset": "clang",
+    "toolset": "gcc",
     "workspace": "numerical-project"
 }
