@@ -5,7 +5,6 @@
 #include<vector>
 #include<functional>
 
-
 template<typename precision_type,
    typename = std::enable_if_t<std::is_floating_point_v<precision_type>>>
 inline auto x_t (precision_type t) ->precision_type{
@@ -38,11 +37,11 @@ enum class result_t{
 
 template<typename precision_type, 
     typename size_t = uint64_t,
-   typename = std::enable_if_t<std::is_floating_point_v<precision_type>>>
-auto cmp_floats(const precision_type a, const precision_type b, const size_t dp) ->result_t{
+        typename = std::enable_if_t<std::is_floating_point_v<precision_type>>>
+    auto cmp_floats(const precision_type a, const precision_type b, const size_t dp) ->result_t{
     const auto factor = pow(10,dp);
-    const auto a1 = static_cast<size_t>(a*factor);
-    const auto b1 = static_cast<size_t>(b*factor);
+    const auto a1 = static_cast<size_t>(a * factor);
+    const auto b1 = static_cast<size_t>(b * factor);
     if (a1 == b1)
         return result_t::EQUAL;
     else if (a1 > b1)
@@ -50,18 +49,13 @@ auto cmp_floats(const precision_type a, const precision_type b, const size_t dp)
     return result_t::LESS;
 }
 
-namespace std{
-    template <typename type, typename = std::enable_if_t<std::is_arithmetic_v<type>>>
-    auto is_negative(const type t) ->bool{
-        t < 0 ? true : false; 
-    } 
-}
 template<typename equation, typename size_t = uint64_t,
     typename precision_type, typename = std::enable_if_t<std::is_floating_point_v<precision_type>>> 
+    
 static auto bisection_method(equation eq,const precision_type s ,const size_t dp) ->precision_type   {
    auto a = static_cast<precision_type> (10.0);           //initially positive
    auto b = static_cast<precision_type> (-10.0);          //initially negative 
-   decltype(b) old = static_cast<decltype(a)>(0xFFFFFFFF);
+   auto old = static_cast<precision_type>(0xFFFFFFFF);
    while(true){
 
        const auto expr = std::bind(eq,std::placeholders::_1,s);
