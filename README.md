@@ -1,3 +1,3 @@
 # numerical-project
 
-disgusting code...
+How not To write C++
